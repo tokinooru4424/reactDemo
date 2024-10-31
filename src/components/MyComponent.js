@@ -1,29 +1,29 @@
 import React from "react";
+import AddUserInfor from "./AddUserInfor";
+import DisplayInfor from "./DisplayInfor";
 
 class MyComponent extends React.Component {
   state = {
-    name: "Duc",
-    age: 21,
-    address: "Hanoi",
+    listUsers: [
+      { id: 1, name: "Duc", age: "16" },
+      { id: 2, name: "Truong", age: "26" },
+      { id: 3, name: "Minh", age: "69" },
+    ],
   };
 
-  handleClick(event) {
+  handleAddNewUser = (userObj) => {
     this.setState({
-      name: "Kenji",
-      age: Math.floor(Math.random() * 100) + 1,
+      listUsers: [userObj, ...this.state.listUsers],
     });
-  }
-
-  handleOnMouseOver = (event) => {
-    console.log(event.pageX, event.pageY);
   };
 
   render() {
     return (
       <div>
-        My name is {this.state.name} and my age is {this.state.age}
-        <button onMouseOver={() => this.handleOnMouseOver}>Hover me</button>
-        <button onClick={(event) => this.handleClick()}>Click me</button>
+        <AddUserInfor handleAddNewUser={this.handleAddNewUser} />
+        <br />
+        <br />
+        <DisplayInfor listUsers={this.state.listUsers} />
       </div>
     );
   }
