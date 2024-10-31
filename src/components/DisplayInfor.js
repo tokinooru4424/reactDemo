@@ -1,9 +1,15 @@
 import React from "react";
+import "./DisplayInfor.scss";
+import logo from "./../logo.svg";
 
 class DisplayInfor extends React.Component {
-  state = {
-    isShowListUser: true,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isShowListUser: true,
+    };
+  }
 
   handleShowHide = () => {
     this.setState({ isShowListUser: !this.state.isShowListUser });
@@ -11,9 +17,10 @@ class DisplayInfor extends React.Component {
 
   render() {
     const { listUsers } = this.props;
-    console.log(listUsers);
+
     return (
-      <div>
+      <div className="display-infor-container">
+        {/* <img src={logo} className="logo" /> */}
         <div>
           <span onClick={() => this.handleShowHide()}>
             {this.state.isShowListUser
@@ -22,17 +29,26 @@ class DisplayInfor extends React.Component {
           </span>
         </div>
         {this.state.isShowListUser && (
-          <div>
+          <>
             {listUsers.map((user) => {
               return (
                 <div key={user.id} className={user.age > 18 ? "green" : "red"}>
-                  <div>My name is {user.name}</div>
-                  <div>My age is {user.age}</div>
+                  <div>
+                    <div>My name is {user.name}</div>
+                    <div>My age is {user.age}</div>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => this.props.handleDeleteUser(user.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                   <hr />
                 </div>
               );
             })}
-          </div>
+          </>
         )}
       </div>
     );
