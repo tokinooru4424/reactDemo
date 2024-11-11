@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FcPlus } from "react-icons/fc";
-import { toast } from "react-toastify";
-import { putUpdateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
-const ModalUpdateUser = (props) => {
+const ModalViewUser = (props) => {
   const { show, setShow, dataUpdate } = props;
 
   const handleClose = () => {
@@ -29,6 +27,7 @@ const ModalUpdateUser = (props) => {
 
   useEffect(() => {
     if (!_.isEmpty(dataUpdate)) {
+      console.log(dataUpdate);
       //update state
       setEmail(dataUpdate.email);
       setUsername(dataUpdate.username);
@@ -44,29 +43,6 @@ const ModalUpdateUser = (props) => {
       setPreviewImage(URL.createObjectURL(event.target.files[0]));
       setImage(event.target.files[0]);
     } else {
-    }
-  };
-
-  const handleUpdateUser = async () => {
-    //validate
-    // const isValidEmail = validateEmail(email);
-
-    // if (!isValidEmail) {
-    //   toast.error("Invalid email!!!");
-    //   return;
-    // }
-
-    let data = await putUpdateUser(dataUpdate.id, username, role, image);
-    if (data && data.EC === 0) {
-      toast.success(data.EM);
-      handleClose();
-      // await props.fetchListUsers();
-      // props.setCurrentPage(1);
-      await props.fetchListUsersWithPaginate(props.currentPage);
-    }
-
-    if (data && data.EC !== 0) {
-      toast.error(data.EM);
     }
   };
 
@@ -153,13 +129,10 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleUpdateUser()}>
-            Save
-          </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default ModalUpdateUser;
+export default ModalViewUser;

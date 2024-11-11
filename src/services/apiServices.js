@@ -25,4 +25,28 @@ const putUpdateUser = (id, username, role, image) => {
   return axios.put("api/v1/participant", data);
 };
 
-export { postCreateNewUser, getAllUsers, putUpdateUser };
+const deleteUser = (userID) => {
+  return axios.delete("api/v1/participant", { data: { id: userID } });
+};
+
+const getUserWithPaginate = (page, limit) => {
+  return axios.get(`api/v1/participant?page=${page}&limit=${limit}`);
+};
+
+const postLogin = (email, password) => {
+  return axios.post(`/api/v1/login`, { email, password });
+};
+
+const postRegister = (email, password, username) => {
+  return axios.post(`/api/v1/register`, { email, password, username });
+};
+
+export {
+  postCreateNewUser,
+  getAllUsers,
+  putUpdateUser,
+  deleteUser,
+  getUserWithPaginate,
+  postLogin,
+  postRegister,
+};

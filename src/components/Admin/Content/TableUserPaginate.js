@@ -1,8 +1,15 @@
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/apiServices";
+import ReactPaginate from "react-paginate";
 
-const TabelUser = (props) => {
-  const { listUsers } = props;
+const TableUserPaginate = (props) => {
+  const { listUsers, pageCount } = props;
+
+  const handlePageClick = (event) => {
+    props.fetchListUsersWithPaginate(+event.selected + 1);
+    props.setCurrentPage(+event.selected + 1);
+    console.log(`User requested page number ${event.selected}`);
+  };
 
   return (
     <>
@@ -56,7 +63,30 @@ const TabelUser = (props) => {
           )}
         </tbody>
       </table>
+      <div className="user-pagination">
+        <ReactPaginate
+          nextLabel="Next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={2}
+          pageCount={pageCount}
+          previousLabel="< Prev"
+          pageClassName="page-item"
+          pageLinkClassName="page-link"
+          previousClassName="page-item"
+          previousLinkClassName="page-link"
+          nextClassName="page-item"
+          nextLinkClassName="page-link"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          containerClassName="pagination"
+          activeClassName="active"
+          renderOnZeroPageCount={null}
+          forcePage={props.currentPage - 1}
+        />
+      </div>
     </>
   );
 };
-export default TabelUser;
+export default TableUserPaginate;
