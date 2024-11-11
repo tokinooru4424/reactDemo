@@ -47,7 +47,7 @@ const ModalUpdateUser = (props) => {
     }
   };
 
-  const handleSubmitCreateUser = async () => {
+  const handleUpdateUser = async () => {
     //validate
     // const isValidEmail = validateEmail(email);
 
@@ -60,7 +60,9 @@ const ModalUpdateUser = (props) => {
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
-      await props.fetchListUsers();
+      // await props.fetchListUsers();
+      // props.setCurrentPage(1);
+      await props.fetchListUsersWithPaginate(props.currentPage);
     }
 
     if (data && data.EC !== 0) {
@@ -120,6 +122,7 @@ const ModalUpdateUser = (props) => {
               <select
                 className="form-select"
                 onChange={(event) => setRole(event.target.value)}
+                defaultValue={dataUpdate ? dataUpdate.role : "USER"}
               >
                 <option value="USER">USER</option>
                 <option value="ADMIN">ADMIN</option>
@@ -151,7 +154,7 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
+          <Button variant="primary" onClick={() => handleUpdateUser()}>
             Save
           </Button>
         </Modal.Footer>
